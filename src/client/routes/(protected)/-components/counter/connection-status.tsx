@@ -6,7 +6,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@client/components/ui/card";
-import type { UseDualWebSocketReturn } from "@client/hooks/useDualWebSocket";
+import type { UseDualWebSocketReturn } from "@client/hooks/use-dual-websocket";
 import { cn } from "@client/lib/utils";
 import { AlertTriangle, Loader2, Users, Wifi, WifiOff } from "lucide-react";
 

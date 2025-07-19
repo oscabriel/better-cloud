@@ -1,7 +1,6 @@
-import * as SliderPrimitive from "@radix-ui/react-slider";
-import * as React from "react";
-
 import { cn } from "@client/lib/utils";
+import { Slider as SliderPrimitive } from "radix-ui";
+import * as React from "react";
 
 function Slider({
 	className,

@@ -1,12 +1,11 @@
-import { Slot } from "@radix-ui/react-slot";
-import * as React from "react";
-
 import { cn } from "@client/lib/utils";
 import {
 	createFormHook,
 	createFormHookContexts,
 	useStore,
 } from "@tanstack/react-form";
+import { Slot as SlotPrimitive } from "radix-ui";
+import * as React from "react";
 import { Label } from "./label";
 
 const {
@@ -89,12 +88,14 @@ function FormLabel({
 	);
 }
 
-function FormControl({ ...props }: React.ComponentProps<typeof Slot>) {
+function FormControl({
+	...props
+}: React.ComponentProps<typeof SlotPrimitive.Slot>) {
 	const { errors, formItemId, formDescriptionId, formMessageId } =
 		useFieldContext();
 
 	return (
-		<Slot
+		<SlotPrimitive.Slot
 			data-slot="form-control"
 			id={formItemId}
 			aria-describedby={

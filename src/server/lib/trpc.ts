@@ -1,4 +1,4 @@
-import { TRPCError, initTRPC } from "@trpc/server";
+import { initTRPC, TRPCError } from "@trpc/server";
 import type { tRPCContext } from "./types";
 
 export const t = initTRPC.context<tRPCContext>().create();

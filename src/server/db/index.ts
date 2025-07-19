@@ -1,5 +1,5 @@
-import { drizzle } from "drizzle-orm/d1";
 import type { DrizzleD1Database } from "drizzle-orm/d1";
+import { drizzle } from "drizzle-orm/d1";
 
 /**
  * Initialize a Drizzle D1 database instance from the Cloudflare D1 binding.

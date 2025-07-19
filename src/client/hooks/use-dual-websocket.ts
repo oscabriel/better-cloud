@@ -1,7 +1,7 @@
 import {
 	type ConnectionCountMessage,
 	connectionCounterAPI,
-} from "@client/lib/api/connectionCounter";
+} from "@client/lib/api/connection-counter";
 import {
 	type CounterState,
 	type CounterWebSocketMessage,

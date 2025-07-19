@@ -1,8 +1,6 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
-	"organizeImports": {
-		"enabled": true
-	},
+	"$schema": "https://biomejs.dev/schemas/2.1.2/schema.json",
+	"assist": { "actions": { "source": { "organizeImports": "on" } } },
 	"formatter": {
 		"indentStyle": "tab",
 		"indentWidth": 2,
@@ -21,6 +19,18 @@
 						"functions": ["clsx", "cva", "tw", "cn"]
 					}
 				}
+			},
+			"style": {
+				"noParameterAssign": "error",
+				"useAsConstAssertion": "error",
+				"useDefaultParameterLast": "error",
+				"useEnumInitializers": "error",
+				"useSelfClosingElements": "error",
+				"useSingleVarDeclarator": "error",
+				"noUnusedTemplateLiteral": "error",
+				"useNumberNamespace": "error",
+				"noInferrableTypes": "error",
+				"noUselessElse": "error"
 			}
 		}
 	},
@@ -38,13 +48,14 @@
 	},
 	"files": {
 		"ignoreUnknown": true,
-		"ignore": [
-			"dist/**",
-			"node_modules/**",
-			"public/**",
-			"worker-configuration.d.ts",
-			"src/client/routeTree.gen.ts",
-			"src/server/db/migrations/**"
+		"includes": [
+			"**",
+			"!**/dist/**",
+			"!**/node_modules/**",
+			"!**/public/**",
+			"!**/worker-configuration.d.ts",
+			"!**/src/client/routeTree.gen.ts",
+			"!**/src/server/db/migrations/**"
 		]
 	}
 }

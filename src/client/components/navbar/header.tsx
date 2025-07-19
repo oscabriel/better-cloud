@@ -1,9 +1,3 @@
-import { ChevronDown, ExternalLink } from "lucide-react";
-import { useState } from "react";
-
-import { authClient } from "@client/lib/auth-client";
-import { Link } from "@tanstack/react-router";
-
 import { ThemeToggle } from "@client/components/navbar/theme-toggle";
 import { UserMenu } from "@client/components/navbar/user-menu";
 import { Button } from "@client/components/ui/button";
@@ -14,6 +8,10 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@client/components/ui/dropdown-menu";
+import { authClient } from "@client/lib/auth-client";
+import { Link } from "@tanstack/react-router";
+import { ChevronDown, ExternalLink } from "lucide-react";
+import { useState } from "react";
 
 export function Header() {
 	const { data: session } = authClient.useSession();

@@ -7,8 +7,8 @@ import {
 } from "@client/components/ui/card";
 import { Separator } from "@client/components/ui/separator";
 import { Skeleton } from "@client/components/ui/skeleton";
-import { useCounter } from "@client/hooks/useCounterQuery";
-import { useDualWebSocket } from "@client/hooks/useDualWebSocket";
+import { useCounter } from "@client/hooks/use-counter-query";
+import { useDualWebSocket } from "@client/hooks/use-dual-websocket";
 import { ConnectionStatus } from "@client/routes/(protected)/-components/counter/connection-status";
 import { CounterControls } from "@client/routes/(protected)/-components/counter/counter-controls";
 import { CounterDisplay } from "@client/routes/(protected)/-components/counter/counter-display";
@@ -30,8 +30,7 @@ function CounterPage() {
 		},
 	});
 
-	// Auto-connect WebSocket on mount
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+	// biome-ignore lint/correctness/useExhaustiveDependencies: needs to be this way
 	useEffect(() => {
 		dualWs.connect();
 		return () => {

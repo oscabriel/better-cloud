@@ -1,6 +1,6 @@
 import { Loader } from "@client/components/navbar/loader";
 import { authClient } from "@client/lib/auth-client";
-import { Navigate, Outlet, createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Navigate, Outlet } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/(protected)")({
 	component: Layout,
