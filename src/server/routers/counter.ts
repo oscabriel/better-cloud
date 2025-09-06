@@ -169,9 +169,7 @@ counterRouter.get("/websocket", async (c) => {
 		const stub = c.env.COUNTER.get(id);
 
 		// Forward the original request to the Durable Object for WebSocket upgrade
-		const response = await stub.fetch(c.req.raw);
-
-		return response;
+		return stub.fetch(c.req.raw);
 	} catch (error) {
 		console.error("WebSocket upgrade error:", error);
 		return new Response("Failed to upgrade to WebSocket", {

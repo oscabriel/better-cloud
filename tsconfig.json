@@ -11,6 +11,6 @@
 			"@client/*": ["./src/client/*"],
 			"@server/*": ["./src/server/*"]
 		},
-		"types": ["node"]
+		"types": ["node", "./types/env.d.ts", "@cloudflare/workers-types"]
 	}
 }

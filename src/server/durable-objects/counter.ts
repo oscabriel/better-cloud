@@ -1,7 +1,5 @@
 import { DurableObject } from "cloudflare:workers";
-import type { AppBindings, CounterState } from "../lib/types";
-
-type Env = AppBindings["Bindings"];
+import type { CounterState } from "../lib/types";
 
 export class Counter extends DurableObject<Env> {
 	private value = 0;

@@ -1,7 +1,4 @@
 import { DurableObject } from "cloudflare:workers";
-import type { AppBindings } from "../lib/types";
-
-type Env = AppBindings["Bindings"];
 
 export class ConnectionCounter extends DurableObject<Env> {
 	private broadcastConnectionCount() {

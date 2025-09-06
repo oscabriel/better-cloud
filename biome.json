@@ -1,22 +1,48 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.1.2/schema.json",
-	"assist": { "actions": { "source": { "organizeImports": "on" } } },
-	"formatter": {
-		"indentStyle": "tab",
-		"indentWidth": 2,
-		"formatWithErrors": true
+	"$schema": "https://biomejs.dev/schemas/2.2.3/schema.json",
+	"vcs": {
+		"enabled": false,
+		"clientKind": "git",
+		"useIgnoreFile": false
 	},
+	"files": {
+		"ignoreUnknown": false,
+		"includes": [
+			"**",
+			"!**/dist",
+			"!**/.vscode",
+			"!**/routeTree.gen.ts",
+			"!**/.wrangler",
+			"!**/wrangler.jsonc",
+			"!**/node_modules",
+			"!**/public",
+			"!**/src/server/db/migrations",
+			"!**/.alchemy",
+			"!**/alchemy.run.ts",
+			"!**/bun.lock"
+		]
+	},
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "tab"
+	},
+	"assist": { "actions": { "source": { "organizeImports": "on" } } },
 	"linter": {
 		"enabled": true,
 		"rules": {
 			"recommended": true,
+			"correctness": {
+				"useExhaustiveDependencies": "info"
+			},
+			"suspicious": {
+				"noUnknownAtRules": "off"
+			},
 			"nursery": {
 				"useSortedClasses": {
 					"level": "warn",
 					"fix": "safe",
 					"options": {
-						"attributes": ["classList"],
-						"functions": ["clsx", "cva", "tw", "cn"]
+						"functions": ["clsx", "cva", "cn"]
 					}
 				}
 			},
@@ -37,25 +63,8 @@
 	"javascript": {
 		"formatter": {
 			"quoteStyle": "double",
-			"trailingCommas": "all",
-			"semicolons": "always"
+			"semicolons": "always",
+			"trailingCommas": "all"
 		}
-	},
-	"vcs": {
-		"enabled": true,
-		"clientKind": "git",
-		"useIgnoreFile": true
-	},
-	"files": {
-		"ignoreUnknown": true,
-		"includes": [
-			"**",
-			"!**/dist/**",
-			"!**/node_modules/**",
-			"!**/public/**",
-			"!**/worker-configuration.d.ts",
-			"!**/src/client/routeTree.gen.ts",
-			"!**/src/server/db/migrations/**"
-		]
 	}
 }

@@ -9,20 +9,20 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as protectedLayoutRouteImport } from './routes/(protected)/layout'
-import { Route as authLayoutRouteImport } from './routes/(auth)/layout'
+import { Route as ProtectedLayoutRouteImport } from './routes/_protectedLayout'
+import { Route as AuthLayoutRouteImport } from './routes/_authLayout'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as protectedProfileRouteImport } from './routes/(protected)/profile'
-import { Route as protectedGuestbookRouteImport } from './routes/(protected)/guestbook'
-import { Route as protectedCounterRouteImport } from './routes/(protected)/counter'
-import { Route as authSignInRouteImport } from './routes/(auth)/sign-in'
+import { Route as ProtectedLayoutProfileRouteImport } from './routes/_protectedLayout/profile'
+import { Route as ProtectedLayoutGuestbookRouteImport } from './routes/_protectedLayout/guestbook'
+import { Route as ProtectedLayoutCounterRouteImport } from './routes/_protectedLayout/counter'
+import { Route as AuthLayoutSignInRouteImport } from './routes/_authLayout/sign-in'
 
-const protectedLayoutRoute = protectedLayoutRouteImport.update({
-  id: '/(protected)',
+const ProtectedLayoutRoute = ProtectedLayoutRouteImport.update({
+  id: '/_protectedLayout',
   getParentRoute: () => rootRouteImport,
 } as any)
-const authLayoutRoute = authLayoutRouteImport.update({
-  id: '/(auth)',
+const AuthLayoutRoute = AuthLayoutRouteImport.update({
+  id: '/_authLayout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -30,50 +30,51 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const protectedProfileRoute = protectedProfileRouteImport.update({
+const ProtectedLayoutProfileRoute = ProtectedLayoutProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
-  getParentRoute: () => protectedLayoutRoute,
+  getParentRoute: () => ProtectedLayoutRoute,
 } as any)
-const protectedGuestbookRoute = protectedGuestbookRouteImport.update({
-  id: '/guestbook',
-  path: '/guestbook',
-  getParentRoute: () => protectedLayoutRoute,
-} as any)
-const protectedCounterRoute = protectedCounterRouteImport.update({
+const ProtectedLayoutGuestbookRoute =
+  ProtectedLayoutGuestbookRouteImport.update({
+    id: '/guestbook',
+    path: '/guestbook',
+    getParentRoute: () => ProtectedLayoutRoute,
+  } as any)
+const ProtectedLayoutCounterRoute = ProtectedLayoutCounterRouteImport.update({
   id: '/counter',
   path: '/counter',
-  getParentRoute: () => protectedLayoutRoute,
+  getParentRoute: () => ProtectedLayoutRoute,
 } as any)
-const authSignInRoute = authSignInRouteImport.update({
+const AuthLayoutSignInRoute = AuthLayoutSignInRouteImport.update({
   id: '/sign-in',
   path: '/sign-in',
-  getParentRoute: () => authLayoutRoute,
+  getParentRoute: () => AuthLayoutRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof protectedLayoutRouteWithChildren
-  '/sign-in': typeof authSignInRoute
-  '/counter': typeof protectedCounterRoute
-  '/guestbook': typeof protectedGuestbookRoute
-  '/profile': typeof protectedProfileRoute
+  '/': typeof IndexRoute
+  '/sign-in': typeof AuthLayoutSignInRoute
+  '/counter': typeof ProtectedLayoutCounterRoute
+  '/guestbook': typeof ProtectedLayoutGuestbookRoute
+  '/profile': typeof ProtectedLayoutProfileRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof protectedLayoutRouteWithChildren
-  '/sign-in': typeof authSignInRoute
-  '/counter': typeof protectedCounterRoute
-  '/guestbook': typeof protectedGuestbookRoute
-  '/profile': typeof protectedProfileRoute
+  '/': typeof IndexRoute
+  '/sign-in': typeof AuthLayoutSignInRoute
+  '/counter': typeof ProtectedLayoutCounterRoute
+  '/guestbook': typeof ProtectedLayoutGuestbookRoute
+  '/profile': typeof ProtectedLayoutProfileRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/(auth)': typeof authLayoutRouteWithChildren
-  '/(protected)': typeof protectedLayoutRouteWithChildren
-  '/(auth)/sign-in': typeof authSignInRoute
-  '/(protected)/counter': typeof protectedCounterRoute
-  '/(protected)/guestbook': typeof protectedGuestbookRoute
-  '/(protected)/profile': typeof protectedProfileRoute
+  '/_authLayout': typeof AuthLayoutRouteWithChildren
+  '/_protectedLayout': typeof ProtectedLayoutRouteWithChildren
+  '/_authLayout/sign-in': typeof AuthLayoutSignInRoute
+  '/_protectedLayout/counter': typeof ProtectedLayoutCounterRoute
+  '/_protectedLayout/guestbook': typeof ProtectedLayoutGuestbookRoute
+  '/_protectedLayout/profile': typeof ProtectedLayoutProfileRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -83,34 +84,34 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/(auth)'
-    | '/(protected)'
-    | '/(auth)/sign-in'
-    | '/(protected)/counter'
-    | '/(protected)/guestbook'
-    | '/(protected)/profile'
+    | '/_authLayout'
+    | '/_protectedLayout'
+    | '/_authLayout/sign-in'
+    | '/_protectedLayout/counter'
+    | '/_protectedLayout/guestbook'
+    | '/_protectedLayout/profile'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  authLayoutRoute: typeof authLayoutRouteWithChildren
-  protectedLayoutRoute: typeof protectedLayoutRouteWithChildren
+  AuthLayoutRoute: typeof AuthLayoutRouteWithChildren
+  ProtectedLayoutRoute: typeof ProtectedLayoutRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/(protected)': {
-      id: '/(protected)'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof protectedLayoutRouteImport
+    '/_protectedLayout': {
+      id: '/_protectedLayout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof ProtectedLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/(auth)': {
-      id: '/(auth)'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof authLayoutRouteImport
+    '/_authLayout': {
+      id: '/_authLayout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -120,69 +121,69 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/(protected)/profile': {
-      id: '/(protected)/profile'
+    '/_protectedLayout/profile': {
+      id: '/_protectedLayout/profile'
       path: '/profile'
       fullPath: '/profile'
-      preLoaderRoute: typeof protectedProfileRouteImport
-      parentRoute: typeof protectedLayoutRoute
+      preLoaderRoute: typeof ProtectedLayoutProfileRouteImport
+      parentRoute: typeof ProtectedLayoutRoute
     }
-    '/(protected)/guestbook': {
-      id: '/(protected)/guestbook'
+    '/_protectedLayout/guestbook': {
+      id: '/_protectedLayout/guestbook'
       path: '/guestbook'
       fullPath: '/guestbook'
-      preLoaderRoute: typeof protectedGuestbookRouteImport
-      parentRoute: typeof protectedLayoutRoute
+      preLoaderRoute: typeof ProtectedLayoutGuestbookRouteImport
+      parentRoute: typeof ProtectedLayoutRoute
     }
-    '/(protected)/counter': {
-      id: '/(protected)/counter'
+    '/_protectedLayout/counter': {
+      id: '/_protectedLayout/counter'
       path: '/counter'
       fullPath: '/counter'
-      preLoaderRoute: typeof protectedCounterRouteImport
-      parentRoute: typeof protectedLayoutRoute
+      preLoaderRoute: typeof ProtectedLayoutCounterRouteImport
+      parentRoute: typeof ProtectedLayoutRoute
     }
-    '/(auth)/sign-in': {
-      id: '/(auth)/sign-in'
+    '/_authLayout/sign-in': {
+      id: '/_authLayout/sign-in'
       path: '/sign-in'
       fullPath: '/sign-in'
-      preLoaderRoute: typeof authSignInRouteImport
-      parentRoute: typeof authLayoutRoute
+      preLoaderRoute: typeof AuthLayoutSignInRouteImport
+      parentRoute: typeof AuthLayoutRoute
     }
   }
 }
 
-interface authLayoutRouteChildren {
-  authSignInRoute: typeof authSignInRoute
+interface AuthLayoutRouteChildren {
+  AuthLayoutSignInRoute: typeof AuthLayoutSignInRoute
 }
 
-const authLayoutRouteChildren: authLayoutRouteChildren = {
-  authSignInRoute: authSignInRoute,
+const AuthLayoutRouteChildren: AuthLayoutRouteChildren = {
+  AuthLayoutSignInRoute: AuthLayoutSignInRoute,
 }
 
-const authLayoutRouteWithChildren = authLayoutRoute._addFileChildren(
-  authLayoutRouteChildren,
+const AuthLayoutRouteWithChildren = AuthLayoutRoute._addFileChildren(
+  AuthLayoutRouteChildren,
 )
 
-interface protectedLayoutRouteChildren {
-  protectedCounterRoute: typeof protectedCounterRoute
-  protectedGuestbookRoute: typeof protectedGuestbookRoute
-  protectedProfileRoute: typeof protectedProfileRoute
+interface ProtectedLayoutRouteChildren {
+  ProtectedLayoutCounterRoute: typeof ProtectedLayoutCounterRoute
+  ProtectedLayoutGuestbookRoute: typeof ProtectedLayoutGuestbookRoute
+  ProtectedLayoutProfileRoute: typeof ProtectedLayoutProfileRoute
 }
 
-const protectedLayoutRouteChildren: protectedLayoutRouteChildren = {
-  protectedCounterRoute: protectedCounterRoute,
-  protectedGuestbookRoute: protectedGuestbookRoute,
-  protectedProfileRoute: protectedProfileRoute,
+const ProtectedLayoutRouteChildren: ProtectedLayoutRouteChildren = {
+  ProtectedLayoutCounterRoute: ProtectedLayoutCounterRoute,
+  ProtectedLayoutGuestbookRoute: ProtectedLayoutGuestbookRoute,
+  ProtectedLayoutProfileRoute: ProtectedLayoutProfileRoute,
 }
 
-const protectedLayoutRouteWithChildren = protectedLayoutRoute._addFileChildren(
-  protectedLayoutRouteChildren,
+const ProtectedLayoutRouteWithChildren = ProtectedLayoutRoute._addFileChildren(
+  ProtectedLayoutRouteChildren,
 )
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  authLayoutRoute: authLayoutRouteWithChildren,
-  protectedLayoutRoute: protectedLayoutRouteWithChildren,
+  AuthLayoutRoute: AuthLayoutRouteWithChildren,
+  ProtectedLayoutRoute: ProtectedLayoutRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

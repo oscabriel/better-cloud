@@ -20,7 +20,7 @@ import { LogOutIcon, UserCircleIcon } from "lucide-react";
 export function UserMenu() {
 	const { data: session } = authClient.useSession();
 
-	if (!session) {
+	if (!session || !session.user) {
 		return (
 			<Button variant="outline" asChild>
 				<Link to="/sign-in">Sign In</Link>

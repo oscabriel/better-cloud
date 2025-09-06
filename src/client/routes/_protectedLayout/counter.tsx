@@ -9,14 +9,14 @@ import { Separator } from "@client/components/ui/separator";
 import { Skeleton } from "@client/components/ui/skeleton";
 import { useCounter } from "@client/hooks/use-counter-query";
 import { useDualWebSocket } from "@client/hooks/use-dual-websocket";
-import { ConnectionStatus } from "@client/routes/(protected)/-components/counter/connection-status";
-import { CounterControls } from "@client/routes/(protected)/-components/counter/counter-controls";
-import { CounterDisplay } from "@client/routes/(protected)/-components/counter/counter-display";
 import { createFileRoute } from "@tanstack/react-router";
 import { AlertTriangle, Database, Globe, Info, Zap } from "lucide-react";
 import { useEffect } from "react";
+import { ConnectionStatus } from "./-components/counter/connection-status";
+import { CounterControls } from "./-components/counter/counter-controls";
+import { CounterDisplay } from "./-components/counter/counter-display";
 
-export const Route = createFileRoute("/(protected)/counter")({
+export const Route = createFileRoute("/_protectedLayout/counter")({
 	component: CounterPage,
 });
 

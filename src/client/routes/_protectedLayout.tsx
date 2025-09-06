@@ -2,11 +2,11 @@ import { Loader } from "@client/components/navbar/loader";
 import { authClient } from "@client/lib/auth-client";
 import { createFileRoute, Navigate, Outlet } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/(auth)")({
-	component: Layout,
+export const Route = createFileRoute("/_protectedLayout")({
+	component: ProtectedLayout,
 });
 
-function Layout() {
+function ProtectedLayout() {
 	const { data: session, isPending } = authClient.useSession();
 
 	if (isPending) {
@@ -14,8 +14,8 @@ function Layout() {
 	}
 
 	if (!session?.user) {
-		return <Outlet />;
+		return <Navigate to="/sign-in" />;
 	}
 
-	return <Navigate to="/" />;
+	return <Outlet />;
 }

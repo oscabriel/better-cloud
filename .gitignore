@@ -17,8 +17,16 @@ worker-configuration.d.ts
 
 # Environment variables
 .env
+.env.*
+!.env.example
 .dev.vars
 
 # AI
 .ai
 AGENTS.md
+
+# Tanstack
+.tanstack
+
+# Alchemy
+.alchemy

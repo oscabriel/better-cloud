@@ -1,19 +1,7 @@
-/// <reference path="../../../worker-configuration.d.ts" />
-import type {
-	Request as CfRequest,
-	DurableObjectNamespace,
-} from "@cloudflare/workers-types";
 import { Hono } from "hono";
+import type { AppBindings } from "../lib/types";
 
-// Environment type for ConnectionCounter router
-type ConnectionCounterEnv = {
-	Bindings: {
-		CONNECTION_COUNTER: DurableObjectNamespace;
-	};
-	Variables: Record<string, never>;
-};
-
-const connectionCounterRouter = new Hono<ConnectionCounterEnv>();
+const connectionCounterRouter = new Hono<AppBindings>();
 
 // HTTP endpoint to get current connection count
 connectionCounterRouter.get("/", async (c) => {
@@ -73,9 +61,7 @@ connectionCounterRouter.get("/websocket", async (c) => {
 		const stub = c.env.CONNECTION_COUNTER.get(id);
 
 		// Forward the request to the Durable Object for upgrade
-		const response = (await stub.fetch(
-			c.req.raw as unknown as CfRequest,
-		)) as unknown as Response;
+		const response = await stub.fetch(c.req.raw);
 		return response;
 	} catch (error) {
 		console.error("WebSocket upgrade error (ConnectionCounter):", error);
