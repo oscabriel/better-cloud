@@ -35,7 +35,7 @@ Better-Cloud is a modern, full-stack starter kit built for Cloudflare Workers. I
 - ⚡ **Real-time Features**: Cloudflare Durable Objects with WebSocket hibernation API for stateful, cost-effective real-time updates
 - 🗄️ **Persistent State**: SQLite-backed Durable Objects with ACID transactional guarantees, automatic hibernation, and global consistency
 - 🌍 **Edge-First Deployment**: Cloudflare Workers provides a global CDN and cache for fast rendering
-- 🧰 **Tooling**: Biome for linting/formatting, Bun for package management, Wrangler for deployments
+- 🧰 **Tooling**: Biome for linting/formatting, Bun for package management, Alchemy for infrastructure management & deployments
 
 ## Project Structure
 
@@ -169,13 +169,22 @@ bun preview   // preview prod build available at http://localhost:4173
 
 ### Deployment
 
-Deploy to live site on Cloudflare Workers, to custom domain or `app-name.username.workers.dev` domain:
+This project uses [Alchemy](https://alchemy.run) for infrastructure-as-code deployment management. All resources including the Worker, D1 database, KV namespaces, Durable Objects, and custom domains are defined in `alchemy.run.ts`.
+
+Deploy to live site on Cloudflare Workers:
 
 ```bash
-bun cf:deploy
+bun a: // to use alchemy
 # or
-bunx wrangler deploy
+bunx wrangler deploy // to use wrangler directly
 ```
+
+**Alchemy Infrastructure Management:**
+- All Cloudflare resources are declaratively defined in `alchemy.run.ts`
+- Supports adoption of existing resources with `adopt: true`
+- Custom domain (`better-cloud.dev`) is configured and managed through Alchemy
+- Database migrations are automatically handled during deployment
+- Environment-specific configurations (dev/prod) supported
 
 **Durable Objects Deployment Notes:**
 - Durable Objects are automatically deployed with your Worker
