@@ -4,7 +4,6 @@
 	"version": "0.0.1",
 	"type": "module",
 	"scripts": {
-		"dev": "vite",
 		"build": "vite build",
 		"preview": "bun run build && vite preview",
 		"typecheck": "tsc --noEmit",
@@ -16,8 +15,7 @@
 		"db:studio": "DB_STAGE=dev drizzle-kit studio",
 		"db:studio:prod": "drizzle-kit studio",
 		"db:generate": "drizzle-kit generate",
-		"db:migrate": "drizzle-kit migrate",
-		"cf:dev": "wrangler dev"
+		"db:migrate": "drizzle-kit migrate"
 	},
 	"dependencies": {
 		"@biomejs/biome": "2.2.3",

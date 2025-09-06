@@ -52,7 +52,7 @@ export const CounterDisplay = memo(function CounterDisplay({
 						<div className="text-muted-foreground text-xs uppercase tracking-wide">
 							Total Increments
 						</div>
-						<div className="font-semibold text-xl text-green-600">
+						<div className="font-semibold text-green-600 text-xl">
 							+{formatNumber(state.totalIncrements)}
 						</div>
 					</div>
@@ -61,7 +61,7 @@ export const CounterDisplay = memo(function CounterDisplay({
 						<div className="text-muted-foreground text-xs uppercase tracking-wide">
 							Total Decrements
 						</div>
-						<div className="font-semibold text-xl text-red-600">
+						<div className="font-semibold text-red-600 text-xl">
 							-{formatNumber(state.totalDecrements)}
 						</div>
 					</div>
@@ -81,7 +81,7 @@ export const CounterDisplay = memo(function CounterDisplay({
 									</div>
 								</>
 							) : (
-								<div className="font-semibold text-sm text-muted-foreground">
+								<div className="font-semibold text-muted-foreground text-sm">
 									Never
 								</div>
 							)}

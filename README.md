@@ -319,19 +319,16 @@ bun db:push
 
 ### Development
 
-**Dual Server Setup** (Required)
+**Single Command Setup** (Recommended)
 ```bash
-# Terminal 1: Frontend development server  
-bun dev              # → http://localhost:5173
-
-# Terminal 2: Workers API server
-bun cf:dev           # → http://localhost:8787
+# Start both frontend and backend with Alchemy
+bun a:dev            # → Frontend: http://localhost:5173, Backend: http://localhost:8787
 ```
 
-**Why Two Servers?**
-- **Frontend (Vite)**: Hot module replacement, React dev tools, fast builds
-- **Backend (Workers)**: Durable Objects, WebSocket connections, authentication
-- **Note**: Social OAuth requires the Workers server for proper callback handling
+**Why Alchemy Dev Server?**
+- **Unified Environment**: Single command starts both Vite frontend and Workers backend
+- **Proper Database Integration**: Uses the D1 database created by alchemy state stored in `.alchemy/` directory
+- **Resource Management**: Automatic setup of KV, Durable Objects, and other Cloudflare resources
 
 **Development Commands**
 ```bash
@@ -354,8 +351,7 @@ bun preview          # → http://localhost:4173
 
 **Option 1: Alchemy (Recommended)**
 ```bash
-# Deploy with infrastructure-as-code
-bun a:dev            # Launch alchemy dev server
+# Deploy with Alchemy IaC
 bun a:deploy         # Deploy to production  
 ```
 

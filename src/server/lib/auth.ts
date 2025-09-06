@@ -1,7 +1,7 @@
 import { env } from "cloudflare:workers";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { emailOTP } from "better-auth/plugins";
+import { emailOTP, openAPI } from "better-auth/plugins";
 import { Resend } from "resend";
 import { db } from "@/server/db";
 import { EMAIL_FROM_ADDRESS, EMAIL_FROM_NAME } from "@/server/lib/constants";
@@ -44,6 +44,7 @@ export const auth = betterAuth({
 		},
 	},
 	plugins: [
+		openAPI(),
 		emailOTP({
 			async sendVerificationOTP({ email, otp, type }) {
 				if (env.ALCHEMY_STAGE === "dev") {
@@ -67,12 +68,12 @@ export const auth = betterAuth({
 	},
 	advanced: {
 		crossSubDomainCookies: {
-			enabled: true,
-			domain: ".better-cloud.dev",
+			enabled: env.ALCHEMY_STAGE !== "dev",
+			domain: env.ALCHEMY_STAGE === "dev" ? undefined : ".better-cloud.dev",
 		},
 		defaultCookieAttributes: {
 			sameSite: "lax",
-			secure: true,
+			secure: env.ALCHEMY_STAGE !== "dev",
 			httpOnly: true,
 		},
 	},

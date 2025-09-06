@@ -81,6 +81,9 @@ export const server = await Worker("server", {
 			adopt: true,
 		},
 	],
+	dev: {
+		port: 8787,
+	},
 });
 
 if (stage === "prod") {
