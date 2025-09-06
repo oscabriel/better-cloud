@@ -9,7 +9,7 @@ export interface ConnectionCountMessage {
 export class ConnectionCounterAPI {
 	private baseUrl: string;
 
-	constructor(baseUrl = "/api/connection-count") {
+	constructor(baseUrl = "/connection-count") {
 		this.baseUrl = baseUrl;
 	}
 

@@ -1,8 +1,8 @@
-import { Button } from "@client/components/ui/button";
-import { Card, CardContent } from "@client/components/ui/card";
-import { trpc } from "@client/lib/trpc-client";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
+import { Button } from "@/client/components/ui/button";
+import { Card, CardContent } from "@/client/components/ui/card";
+import { trpc } from "@/client/lib/trpc-client";
 
 export const Route = createFileRoute("/")({
 	component: RouteComponent,

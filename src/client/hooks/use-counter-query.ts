@@ -1,6 +1,6 @@
-import { type CounterState, counterAPI } from "@client/lib/api/counter";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { type CounterState, counterAPI } from "@/client/lib/api/counter";
 
 // Query keys
 export const counterKeys = {

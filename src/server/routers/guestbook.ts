@@ -1,7 +1,7 @@
 import { desc } from "drizzle-orm";
 import { z } from "zod";
-import { guestbook_message } from "../db/schema/guestbook";
-import { publicProcedure, router } from "../lib/trpc";
+import { guestbook_message } from "@/server/db/schema/guestbook";
+import { publicProcedure, router } from "@/server/lib/trpc";
 
 export const guestbookRouter = router({
 	getAll: publicProcedure.query(async ({ ctx }) => {

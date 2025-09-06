@@ -1,4 +1,4 @@
-import { publicProcedure, router } from "../lib/trpc";
+import { publicProcedure, router } from "@/server/lib/trpc";
 import { guestbookRouter } from "./guestbook";
 import { userRouter } from "./user";
 

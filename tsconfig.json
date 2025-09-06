@@ -8,8 +8,8 @@
 	"compilerOptions": {
 		"baseUrl": ".",
 		"paths": {
-			"@client/*": ["./src/client/*"],
-			"@server/*": ["./src/server/*"]
+			"@/client/*": ["./src/client/*"],
+			"@/server/*": ["./src/server/*"]
 		},
 		"types": ["node", "./types/env.d.ts", "@cloudflare/workers-types"]
 	}

@@ -1,9 +1,10 @@
+import { env } from "cloudflare:workers";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { z } from "zod";
-import type { AppBindings, CounterState } from "../lib/types";
+import type { CounterState } from "@/server/lib/types";
 
-const counterRouter = new Hono<AppBindings>();
+const counterRouter = new Hono();
 
 // Validation schemas
 const incrementSchema = z.object({
@@ -17,8 +18,8 @@ const decrementSchema = z.object({
 // Get counter value
 counterRouter.get("/", async (c) => {
 	try {
-		const id = c.env.COUNTER.idFromName("global-counter");
-		const stub = c.env.COUNTER.get(id);
+		const id = env.COUNTER.idFromName("global-counter");
+		const stub = env.COUNTER.get(id);
 		const response = await stub.fetch("http://counter.do/");
 
 		if (!response.ok) {
@@ -49,13 +50,15 @@ counterRouter.post(
 				);
 			}
 
-			const id = c.env.COUNTER.idFromName("global-counter");
-			const stub = c.env.COUNTER.get(id);
+			const id = env.COUNTER.idFromName("global-counter");
+			const stub = env.COUNTER.get(id);
 
 			// Get user info for lastUpdater tracking
-			const user = c.get("user");
+			const user = c.get("session");
 			const username =
-				user?.name || user?.email?.split("@")[0] || "Anonymous User";
+				user?.user?.name ||
+				user?.user?.email?.split("@")[0] ||
+				"Anonymous User";
 
 			const response = await stub.fetch("http://counter.do/increment", {
 				method: "POST",
@@ -95,13 +98,15 @@ counterRouter.post(
 				);
 			}
 
-			const id = c.env.COUNTER.idFromName("global-counter");
-			const stub = c.env.COUNTER.get(id);
+			const id = env.COUNTER.idFromName("global-counter");
+			const stub = env.COUNTER.get(id);
 
 			// Get user info for lastUpdater tracking
-			const user = c.get("user");
+			const user = c.get("session");
 			const username =
-				user?.name || user?.email?.split("@")[0] || "Anonymous User";
+				user?.user?.name ||
+				user?.user?.email?.split("@")[0] ||
+				"Anonymous User";
 
 			const response = await stub.fetch("http://counter.do/decrement", {
 				method: "POST",
@@ -165,8 +170,8 @@ counterRouter.get("/websocket", async (c) => {
 			});
 		}
 
-		const id = c.env.COUNTER.idFromName("global-counter");
-		const stub = c.env.COUNTER.get(id);
+		const id = env.COUNTER.idFromName("global-counter");
+		const stub = env.COUNTER.get(id);
 
 		// Forward the original request to the Durable Object for WebSocket upgrade
 		return stub.fetch(c.req.raw);

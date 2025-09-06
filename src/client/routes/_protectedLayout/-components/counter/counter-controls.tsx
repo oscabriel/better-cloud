@@ -1,14 +1,14 @@
-import { Button } from "@client/components/ui/button";
+import { Loader2, Minus, Plus } from "lucide-react";
+import { useState } from "react";
+import { Button } from "@/client/components/ui/button";
 import {
 	Card,
 	CardContent,
 	CardHeader,
 	CardTitle,
-} from "@client/components/ui/card";
-import { Slider } from "@client/components/ui/slider";
-import { cn } from "@client/lib/utils";
-import { Loader2, Minus, Plus } from "lucide-react";
-import { useState } from "react";
+} from "@/client/components/ui/card";
+import { Slider } from "@/client/components/ui/slider";
+import { cn } from "@/client/lib/utils";
 
 interface CounterControlsProps {
 	onIncrement: (amount: number) => void;

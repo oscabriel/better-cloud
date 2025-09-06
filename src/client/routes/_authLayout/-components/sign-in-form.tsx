@@ -1,18 +1,18 @@
-import { Button } from "@client/components/ui/button";
-import { Input } from "@client/components/ui/input";
-import {
-	InputOTP,
-	InputOTPGroup,
-	InputOTPSlot,
-} from "@client/components/ui/input-otp";
-import { useAppForm } from "@client/components/ui/tanstack-form";
-import { authClient } from "@client/lib/auth-client";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { ExternalLink } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
+import { Button } from "@/client/components/ui/button";
+import { Input } from "@/client/components/ui/input";
+import {
+	InputOTP,
+	InputOTPGroup,
+	InputOTPSlot,
+} from "@/client/components/ui/input-otp";
+import { useAppForm } from "@/client/components/ui/tanstack-form";
+import { authClient } from "@/client/lib/auth-client";
 
 export function SignInForm() {
 	const navigate = useNavigate({
@@ -64,9 +64,7 @@ export function SignInForm() {
 	// Social sign in mutations
 	const socialSignInMutation = useMutation({
 		mutationFn: async ({ provider }: { provider: "google" | "github" }) => {
-			const callbackURL = import.meta.env.PROD
-				? `${import.meta.env.VITE_FRONTEND_PROD_URL}/guestbook`
-				: `${import.meta.env.VITE_FRONTEND_DEV_URL}/guestbook`;
+			const callbackURL = `${import.meta.env.VITE_CLIENT_URL}/guestbook`;
 
 			return authClient.signIn.social({
 				provider,

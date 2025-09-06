@@ -16,18 +16,8 @@ export default defineConfig(() => ({
 	],
 	resolve: {
 		alias: {
-			"@client": path.resolve(__dirname, "./src/client/"),
-			"@server": path.resolve(__dirname, "./src/server/"),
+			"@/client": path.resolve(__dirname, "./src/client/"),
+			"@/server": path.resolve(__dirname, "./src/server/"),
 		},
 	},
-	build: {
-		// Only build client-side code with Vite
-		rollupOptions: {
-			input: "./index.html", // HTML entry point for client
-		},
-		outDir: "dist/client", // Separate client build directory
-	},
-	envDir: "./", // Look for .env files in root directory
-	envPrefix: ["VITE_"], // Only expose VITE_ prefixed variables to client
-	root: ".", // Ensure root is project directory
 }));

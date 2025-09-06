@@ -1,7 +1,7 @@
-import { queryClient, trpc } from "@client/lib/trpc-client";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 import ReactDOM from "react-dom/client";
+import { queryClient, trpc } from "@/client/lib/trpc-client";
 import { routeTree } from "./routeTree.gen";
 
 // Create router with wrapped query client

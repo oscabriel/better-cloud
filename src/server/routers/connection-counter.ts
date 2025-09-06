@@ -1,13 +1,13 @@
+import { env } from "cloudflare:workers";
 import { Hono } from "hono";
-import type { AppBindings } from "../lib/types";
 
-const connectionCounterRouter = new Hono<AppBindings>();
+const connectionCounterRouter = new Hono();
 
 // HTTP endpoint to get current connection count
 connectionCounterRouter.get("/", async (c) => {
 	try {
-		const id = c.env.CONNECTION_COUNTER.idFromName("global-connection-counter");
-		const stub = c.env.CONNECTION_COUNTER.get(id);
+		const id = env.CONNECTION_COUNTER.idFromName("global-connection-counter");
+		const stub = env.CONNECTION_COUNTER.get(id);
 		const response = await stub.fetch("http://connection-counter.do/");
 		if (!response.ok) {
 			throw new Error(`ConnectionCounter service error: ${response.status}`);
@@ -57,8 +57,8 @@ connectionCounterRouter.get("/websocket", async (c) => {
 			});
 		}
 
-		const id = c.env.CONNECTION_COUNTER.idFromName("global-connection-counter");
-		const stub = c.env.CONNECTION_COUNTER.get(id);
+		const id = env.CONNECTION_COUNTER.idFromName("global-connection-counter");
+		const stub = env.CONNECTION_COUNTER.get(id);
 
 		// Forward the request to the Durable Object for upgrade
 		const response = await stub.fetch(c.req.raw);

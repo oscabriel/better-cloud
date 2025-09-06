@@ -1,9 +1,11 @@
+import { Link } from "@tanstack/react-router";
+import { LogOutIcon, UserCircleIcon } from "lucide-react";
 import {
 	Avatar,
 	AvatarFallback,
 	AvatarImage,
-} from "@client/components/ui/avatar";
-import { Button } from "@client/components/ui/button";
+} from "@/client/components/ui/avatar";
+import { Button } from "@/client/components/ui/button";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -12,10 +14,8 @@ import {
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
-} from "@client/components/ui/dropdown-menu";
-import { authClient } from "@client/lib/auth-client";
-import { Link } from "@tanstack/react-router";
-import { LogOutIcon, UserCircleIcon } from "lucide-react";
+} from "@/client/components/ui/dropdown-menu";
+import { authClient } from "@/client/lib/auth-client";
 
 export function UserMenu() {
 	const { data: session } = authClient.useSession();
@@ -33,7 +33,7 @@ export function UserMenu() {
 		if (!session.user.name) return "U";
 		return session.user.name
 			.split(" ")
-			.map((name) => name[0])
+			.map((name: string) => name[0])
 			.join("")
 			.toUpperCase()
 			.substring(0, 2);

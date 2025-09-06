@@ -6,7 +6,7 @@ import path from "node:path";
  * or when making queries against the db.
  * @returns Path to most recent .sqlite file in the .wrangler directory
  */
-export function getLocalSQLiteDBPath() {
+export function getLocalD1Path() {
 	try {
 		// .wrangler dir and process execution are assumed to be colocated
 		const basePath = path.resolve(".wrangler");

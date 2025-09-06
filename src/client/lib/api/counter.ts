@@ -26,7 +26,7 @@ export interface CounterWebSocketMessage {
 export class CounterAPI {
 	private baseUrl: string;
 
-	constructor(baseUrl = "/api/counter") {
+	constructor(baseUrl = "/counter") {
 		this.baseUrl = baseUrl;
 	}
 

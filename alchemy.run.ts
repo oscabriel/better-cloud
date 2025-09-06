@@ -1,9 +1,9 @@
 import alchemy from "alchemy";
 import {
-	Assets,
 	D1Database,
 	DurableObjectNamespace,
 	KVNamespace,
+	Vite,
 	Worker,
 	WranglerJson,
 } from "alchemy/cloudflare";
@@ -12,7 +12,7 @@ const stage = process.env.ALCHEMY_STAGE || "dev";
 
 const app = await alchemy("better-cloud", {
 	stage,
-	password: process.env.ALCHEMY_PASSWORD || "dev-password-123",
+	password: process.env.ALCHEMY_PASSWORD!,
 });
 
 const db = await D1Database("database", {
@@ -37,11 +37,24 @@ const connectionCounter = DurableObjectNamespace("connection-counter", {
 	sqlite: false, // Connection counter doesn't need persistent storage
 });
 
-const assets = await Assets("static", {
-	path: "./dist/client",
+export const client = await Vite("client", {
+	name: `${app.name}-client`,
+	assets: "dist",
+	adopt: true,
+	bindings: {
+		VITE_CLIENT_URL: process.env.VITE_CLIENT_URL!,
+		VITE_SERVER_URL: process.env.VITE_SERVER_URL!,
+	},
+	domains: [
+		{
+			domainName: process.env.CUSTOM_WEB_DOMAIN!,
+			zoneId: process.env.CLOUDFLARE_ZONE_ID!,
+			adopt: true,
+		},
+	],
 });
 
-export const worker = await Worker("worker", {
+export const server = await Worker("server", {
 	name: `${app.name}`,
 	entrypoint: "src/server/index.ts",
 	compatibility: "node",
@@ -49,11 +62,10 @@ export const worker = await Worker("worker", {
 	bindings: {
 		DB: db,
 		SESSION_KV: sessions,
-		ASSETS: assets,
 		COUNTER: counter,
 		CONNECTION_COUNTER: connectionCounter,
 		ALCHEMY_STAGE: stage,
-		TRUSTED_ORIGINS: process.env.TRUSTED_ORIGINS!,
+		TRUSTED_ORIGIN: process.env.TRUSTED_ORIGIN!,
 		BETTER_AUTH_SECRET: alchemy.secret(process.env.BETTER_AUTH_SECRET!),
 		BETTER_AUTH_URL: process.env.BETTER_AUTH_URL!,
 		GOOGLE_CLIENT_ID: alchemy.secret(process.env.GOOGLE_CLIENT_ID!),
@@ -64,7 +76,7 @@ export const worker = await Worker("worker", {
 	},
 	domains: [
 		{
-			domainName: process.env.CUSTOM_DOMAIN!,
+			domainName: process.env.CUSTOM_API_DOMAIN!,
 			zoneId: process.env.CLOUDFLARE_ZONE_ID!,
 			adopt: true,
 		},
@@ -73,7 +85,7 @@ export const worker = await Worker("worker", {
 
 if (stage === "prod") {
 	await WranglerJson({
-		worker: worker,
+		worker: server,
 		path: "wrangler.jsonc",
 	});
 }

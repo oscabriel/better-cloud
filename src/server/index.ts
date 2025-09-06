@@ -23,14 +23,21 @@ app.use("*", prettyJSON());
 app.use(
 	"/*",
 	cors({
-		origin: env.TRUSTED_ORIGINS || "",
-		allowMethods: ["GET", "POST", "OPTIONS"],
-		allowHeaders: ["Content-Type", "Authorization"],
+		origin: env.TRUSTED_ORIGIN,
+		allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+		allowHeaders: [
+			"Content-Type",
+			"Authorization",
+			"X-Requested-With",
+			"Accept",
+			"Origin",
+		],
 		credentials: true,
+		maxAge: 86400, // 24 hours
 	}),
 );
 
-app.on(["POST", "GET"], "/api/auth/**", (c) => auth.handler(c.req.raw));
+app.on(["POST", "GET"], "/auth/**", (c) => auth.handler(c.req.raw));
 
 app.use(
 	"/trpc/*",
@@ -42,7 +49,7 @@ app.use(
 	}),
 );
 
-app.route("/api/counter", counterRouter);
-app.route("/api/connection-count", connectionCounterRouter);
+app.route("/counter", counterRouter);
+app.route("/connection-count", connectionCounterRouter);
 
 export default app;

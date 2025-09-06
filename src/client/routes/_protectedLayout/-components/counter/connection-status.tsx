@@ -1,14 +1,14 @@
-import { Badge } from "@client/components/ui/badge";
-import { Button } from "@client/components/ui/button";
+import { AlertTriangle, Loader2, Users, Wifi, WifiOff } from "lucide-react";
+import { Badge } from "@/client/components/ui/badge";
+import { Button } from "@/client/components/ui/button";
 import {
 	Card,
 	CardContent,
 	CardHeader,
 	CardTitle,
-} from "@client/components/ui/card";
-import type { UseDualWebSocketReturn } from "@client/hooks/use-dual-websocket";
-import { cn } from "@client/lib/utils";
-import { AlertTriangle, Loader2, Users, Wifi, WifiOff } from "lucide-react";
+} from "@/client/components/ui/card";
+import type { UseDualWebSocketReturn } from "@/client/hooks/use-dual-websocket";
+import { cn } from "@/client/lib/utils";
 
 interface ConnectionStatusProps {
 	connection: UseDualWebSocketReturn;

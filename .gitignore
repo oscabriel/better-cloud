@@ -18,7 +18,8 @@ worker-configuration.d.ts
 # Environment variables
 .env
 .env.*
-!.env.example
+!.env.prod.example
+!.env.dev.example
 .dev.vars
 
 # AI

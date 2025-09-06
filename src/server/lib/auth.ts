@@ -1,10 +1,10 @@
 import { env } from "cloudflare:workers";
-import { db } from "@server/db";
-import { EMAIL_FROM_ADDRESS, EMAIL_FROM_NAME } from "@server/utils/constants";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { emailOTP } from "better-auth/plugins";
 import { Resend } from "resend";
+import { db } from "@/server/db";
+import { EMAIL_FROM_ADDRESS, EMAIL_FROM_NAME } from "@/server/lib/constants";
 import * as schema from "../db/schema/auth";
 import { verificationCodeEmail } from "./email-templates";
 
@@ -15,8 +15,8 @@ export const auth = betterAuth({
 	}),
 	secret: env.BETTER_AUTH_SECRET,
 	baseURL: env.BETTER_AUTH_URL,
-	basePath: "/api/auth",
-	trustedOrigins: env.TRUSTED_ORIGINS ? env.TRUSTED_ORIGINS.split(",") : [],
+	basePath: "/auth",
+	trustedOrigins: [env.TRUSTED_ORIGIN],
 	socialProviders: {
 		google: {
 			clientId: env.GOOGLE_CLIENT_ID,
@@ -68,9 +68,10 @@ export const auth = betterAuth({
 	advanced: {
 		crossSubDomainCookies: {
 			enabled: true,
+			domain: ".better-cloud.dev",
 		},
 		defaultCookieAttributes: {
-			sameSite: "none",
+			sameSite: "lax",
 			secure: true,
 			httpOnly: true,
 		},

@@ -1,4 +1,3 @@
-import { cn } from "@client/lib/utils";
 import {
 	createFormHook,
 	createFormHookContexts,
@@ -6,6 +5,7 @@ import {
 } from "@tanstack/react-form";
 import { Slot as SlotPrimitive } from "radix-ui";
 import * as React from "react";
+import { cn } from "@/client/lib/utils";
 import { Label } from "./label";
 
 const {

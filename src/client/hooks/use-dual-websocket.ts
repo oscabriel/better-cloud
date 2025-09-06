@@ -1,13 +1,13 @@
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
 	type ConnectionCountMessage,
 	connectionCounterAPI,
-} from "@client/lib/api/connection-counter";
+} from "@/client/lib/api/connection-counter";
 import {
 	type CounterState,
 	type CounterWebSocketMessage,
 	counterAPI,
-} from "@client/lib/api/counter";
-import { useCallback, useEffect, useRef, useState } from "react";
+} from "@/client/lib/api/counter";
 
 export interface UseDualWebSocketOptions {
 	onCounterUpdate?: (state: CounterState) => void;

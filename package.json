@@ -12,8 +12,11 @@
 		"a:deploy": "bun alchemy deploy --env-file .env.prod",
 		"check": "biome check --write src --verbose",
 		"check:unsafe": "biome check --write src --unsafe --verbose",
+		"db:push": "drizzle-kit push",
+		"db:studio": "DB_STAGE=dev drizzle-kit studio",
+		"db:studio:prod": "drizzle-kit studio",
+		"db:generate": "drizzle-kit generate",
 		"db:migrate": "drizzle-kit migrate",
-		"db:studio": "drizzle-kit studio",
 		"cf:dev": "wrangler dev"
 	},
 	"dependencies": {

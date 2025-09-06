@@ -1,17 +1,18 @@
-import { ThemeToggle } from "@client/components/navbar/theme-toggle";
-import { UserMenu } from "@client/components/navbar/user-menu";
-import { Button } from "@client/components/ui/button";
+import { Link } from "@tanstack/react-router";
+import { ChevronDown, ExternalLink } from "lucide-react";
+import { useState } from "react";
+import { ThemeToggle } from "@/client/components/navbar/theme-toggle";
+import { UserMenu } from "@/client/components/navbar/user-menu";
+import { Button } from "@/client/components/ui/button";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
-} from "@client/components/ui/dropdown-menu";
-import { authClient } from "@client/lib/auth-client";
-import { Link } from "@tanstack/react-router";
-import { ChevronDown, ExternalLink } from "lucide-react";
-import { useState } from "react";
+} from "@/client/components/ui/dropdown-menu";
+import { authClient } from "@/client/lib/auth-client";
+import { GITHUB_URL } from "@/client/lib/constants";
 
 export function Header() {
 	const { data: session } = authClient.useSession();
@@ -56,7 +57,7 @@ export function Header() {
 							<DropdownMenuSeparator />
 							<DropdownMenuItem asChild className="text-lg">
 								<a
-									href={import.meta.env.VITE_GITHUB_URL}
+									href={GITHUB_URL}
 									target="_blank"
 									rel="noopener noreferrer"
 									className="flex w-full items-center gap-1"
@@ -78,7 +79,7 @@ export function Header() {
 					))}
 					<Button className="mr-1 text-lg" variant="ghost" asChild>
 						<a
-							href={import.meta.env.VITE_GITHUB_URL}
+							href={GITHUB_URL}
 							target="_blank"
 							rel="noopener noreferrer"
 							className="flex items-center gap-1"

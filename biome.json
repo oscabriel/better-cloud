@@ -34,6 +34,9 @@
 			"correctness": {
 				"useExhaustiveDependencies": "info"
 			},
+			"complexity": {
+				"noImportantStyles": "off"
+			},
 			"suspicious": {
 				"noUnknownAtRules": "off"
 			},
