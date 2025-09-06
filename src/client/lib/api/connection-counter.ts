@@ -14,8 +14,13 @@ export class ConnectionCounterAPI {
 	}
 
 	createWebSocket(): WebSocket {
-		const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-		const wsUrl = `${protocol}//${window.location.host}${this.baseUrl}/websocket`;
+		// Use VITE_SERVER_URL from environment to determine correct server URL
+		const serverUrl =
+			import.meta.env.VITE_SERVER_URL ||
+			`${window.location.protocol}//${window.location.host}`;
+		const url = new URL(serverUrl);
+		const protocol = url.protocol === "https:" ? "wss:" : "ws:";
+		const wsUrl = `${protocol}//${url.host}${this.baseUrl}/websocket`;
 		const ws = new WebSocket(wsUrl);
 
 		// Add connection timeout

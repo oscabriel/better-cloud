@@ -2,6 +2,7 @@ import { env } from "cloudflare:workers";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { z } from "zod";
+import { auth } from "@/server/lib/auth";
 import type { CounterState } from "@/server/lib/types";
 
 const counterRouter = new Hono();
@@ -54,10 +55,20 @@ counterRouter.post(
 			const stub = env.COUNTER.get(id);
 
 			// Get user info for lastUpdater tracking
-			const user = c.get("session");
+			const session = await auth.api.getSession({
+				headers: c.req.raw.headers,
+			});
+
+			console.log("Increment - Session debug:", {
+				hasSession: !!session,
+				user: session?.user,
+				userName: session?.user?.name,
+				userEmail: session?.user?.email,
+			});
+
 			const username =
-				user?.user?.name ||
-				user?.user?.email?.split("@")[0] ||
+				session?.user?.name ||
+				session?.user?.email?.split("@")[0] ||
 				"Anonymous User";
 
 			const response = await stub.fetch("http://counter.do/increment", {
@@ -102,10 +113,20 @@ counterRouter.post(
 			const stub = env.COUNTER.get(id);
 
 			// Get user info for lastUpdater tracking
-			const user = c.get("session");
+			const session = await auth.api.getSession({
+				headers: c.req.raw.headers,
+			});
+
+			console.log("Decrement - Session debug:", {
+				hasSession: !!session,
+				user: session?.user,
+				userName: session?.user?.name,
+				userEmail: session?.user?.email,
+			});
+
 			const username =
-				user?.user?.name ||
-				user?.user?.email?.split("@")[0] ||
+				session?.user?.name ||
+				session?.user?.email?.split("@")[0] ||
 				"Anonymous User";
 
 			const response = await stub.fetch("http://counter.do/decrement", {

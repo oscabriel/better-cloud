@@ -31,7 +31,11 @@ export class CounterAPI {
 	}
 
 	async getCounter(): Promise<CounterState> {
-		const response = await fetch(this.baseUrl);
+		const serverUrl = import.meta.env.VITE_SERVER_URL || "";
+		const url = serverUrl ? `${serverUrl}${this.baseUrl}` : this.baseUrl;
+		const response = await fetch(url, {
+			credentials: "include",
+		});
 
 		if (!response.ok) {
 			throw new Error(`Failed to get counter: ${response.statusText}`);
@@ -42,11 +46,16 @@ export class CounterAPI {
 	}
 
 	async increment(amount = 1): Promise<CounterState> {
-		const response = await fetch(`${this.baseUrl}/increment`, {
+		const serverUrl = import.meta.env.VITE_SERVER_URL || "";
+		const url = serverUrl
+			? `${serverUrl}${this.baseUrl}/increment`
+			: `${this.baseUrl}/increment`;
+		const response = await fetch(url, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 			},
+			credentials: "include",
 			body: JSON.stringify({ amount }),
 		});
 
@@ -59,11 +68,16 @@ export class CounterAPI {
 	}
 
 	async decrement(amount = 1): Promise<CounterState> {
-		const response = await fetch(`${this.baseUrl}/decrement`, {
+		const serverUrl = import.meta.env.VITE_SERVER_URL || "";
+		const url = serverUrl
+			? `${serverUrl}${this.baseUrl}/decrement`
+			: `${this.baseUrl}/decrement`;
+		const response = await fetch(url, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 			},
+			credentials: "include",
 			body: JSON.stringify({ amount }),
 		});
 
@@ -76,8 +90,13 @@ export class CounterAPI {
 	}
 
 	createWebSocket(): WebSocket {
-		const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-		const wsUrl = `${protocol}//${window.location.host}${this.baseUrl}/websocket`;
+		// Use VITE_SERVER_URL from environment to determine correct server URL
+		const serverUrl =
+			import.meta.env.VITE_SERVER_URL ||
+			`${window.location.protocol}//${window.location.host}`;
+		const url = new URL(serverUrl);
+		const protocol = url.protocol === "https:" ? "wss:" : "ws:";
+		const wsUrl = `${protocol}//${url.host}${this.baseUrl}/websocket`;
 		const ws = new WebSocket(wsUrl);
 
 		// Add connection timeout

@@ -31,6 +31,11 @@ app.use(
 			"X-Requested-With",
 			"Accept",
 			"Origin",
+			"Upgrade",
+			"Connection",
+			"Sec-WebSocket-Key",
+			"Sec-WebSocket-Version",
+			"Sec-WebSocket-Protocol",
 		],
 		credentials: true,
 		maxAge: 86400, // 24 hours

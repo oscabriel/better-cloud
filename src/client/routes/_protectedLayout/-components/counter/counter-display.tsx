@@ -19,9 +19,10 @@ export const CounterDisplay = memo(function CounterDisplay({
 
 	const formatDate = (timestamp: number) => {
 		return new Intl.DateTimeFormat("en-US", {
+			month: "short",
+			day: "numeric",
 			hour: "2-digit",
 			minute: "2-digit",
-			second: "2-digit",
 		}).format(new Date(timestamp));
 	};
 
@@ -46,39 +47,43 @@ export const CounterDisplay = memo(function CounterDisplay({
 
 			{/* Statistics */}
 			{showStats && (
-				<div className="grid grid-cols-1 gap-3 text-sm sm:grid-cols-2 md:grid-cols-3">
-					<div className="space-y-1 rounded-lg bg-muted/50 p-3">
+				<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+					<div className="space-y-2 rounded-lg bg-muted/50 p-4">
 						<div className="text-muted-foreground text-xs uppercase tracking-wide">
 							Total Increments
 						</div>
-						<div className="font-semibold text-2xl text-green-600">
+						<div className="font-semibold text-xl text-green-600">
 							+{formatNumber(state.totalIncrements)}
 						</div>
 					</div>
 
-					<div className="space-y-1 rounded-lg bg-muted/50 p-3">
+					<div className="space-y-2 rounded-lg bg-muted/50 p-4">
 						<div className="text-muted-foreground text-xs uppercase tracking-wide">
 							Total Decrements
 						</div>
-						<div className="font-semibold text-2xl text-red-600">
+						<div className="font-semibold text-xl text-red-600">
 							-{formatNumber(state.totalDecrements)}
 						</div>
 					</div>
 
-					<div className="space-y-1 rounded-lg bg-muted/50 p-3 sm:col-span-2 md:col-span-1">
+					<div className="space-y-2 rounded-lg bg-muted/50 p-4 sm:col-span-2 lg:col-span-1">
 						<div className="text-muted-foreground text-xs uppercase tracking-wide">
 							Last Updated
 						</div>
-						<div className="font-semibold text-lg">
+						<div className="space-y-1">
 							{state.lastUpdated ? (
 								<>
-									{formatDate(state.lastUpdated)}
-									<div className="mt-1 text-muted-foreground text-sm">
+									<div className="font-semibold text-sm">
+										{formatDate(state.lastUpdated)}
+									</div>
+									<div className="text-muted-foreground text-xs">
 										by {getLastUpdaterDisplay(state.lastUpdater)}
 									</div>
 								</>
 							) : (
-								"Never"
+								<div className="font-semibold text-sm text-muted-foreground">
+									Never
+								</div>
 							)}
 						</div>
 					</div>
