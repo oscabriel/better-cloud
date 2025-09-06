@@ -66,5 +66,5 @@
 		"vite": "7.1.4",
 		"wrangler": "^4.34.0"
 	},
-	"packageManager": "bun@1.2.12"
+	"packageManager": "bun@1.2.21"
 }
