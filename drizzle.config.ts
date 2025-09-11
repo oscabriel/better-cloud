@@ -1,12 +1,12 @@
-import { defineConfig } from "drizzle-kit";
 import { getLocalD1Path } from "@/server/db/utils";
+import { defineConfig } from "drizzle-kit";
 
 const IS_DEV = process.env.DB_STAGE === "dev";
 
 export default defineConfig({
 	dialect: "sqlite",
-	schema: "./src/db/schema",
-	out: "./src/db/migrations",
+	schema: "./src/server/db/schema",
+	out: "./src/server/db/migrations",
 	...(IS_DEV
 		? {
 				dbCredentials: {
