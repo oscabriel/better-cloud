@@ -1,5 +1,5 @@
 import { defineConfig } from "drizzle-kit";
-import { getLocalD1Path } from "@/serverdb/utils";
+import { getLocalD1Path } from "@/server/db/utils";
 
 const IS_DEV = process.env.DB_STAGE === "dev";
 
