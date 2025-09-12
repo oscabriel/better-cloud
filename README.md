@@ -250,7 +250,7 @@ Durable Objects provide stateful, globally-consistent serverless computing with 
 **Storage Architecture**
 - **Primary Storage**: User accounts and sessions in Cloudflare D1 database
 - **Secondary Storage**: Session caching in Cloudflare KV for fast access
-- **Cross-subdomain Support**: Shared sessions across `*.better-cloud.dev`
+- **Cross-subdomain Support**: Shared sessions across `*.example.com`
 
 **Security Features**  
 - Secure HTTP-only cookies with SameSite protection
@@ -265,6 +265,86 @@ Durable Objects provide stateful, globally-consistent serverless computing with 
 3. **Account Creation**: New users automatically get profiles created  
 4. **Session Establishment**: Secure session created with KV caching
 5. **Profile Access**: User redirected to protected routes with full access
+
+### Cross-Domain & Cross-Subdomain Authentication Setup
+
+This application is configured to handle different domain configurations between development and production environments:
+
+**Development Environment (Cross-Domain)**
+- Frontend: `http://localhost:5173` 
+- Backend: `http://localhost:8787`
+
+**Production Environment (Cross-Subdomain)**  
+- Frontend: `https://example.com`
+- Backend: `https://api.example.com`  
+
+### Environment Variables for Domain Configuration
+
+**CUSTOM_WEB_DOMAIN & CUSTOM_API_DOMAIN**
+These variables define your production domain configuration:
+```env
+# Production domains (used by Alchemy for SSL/DNS setup)
+CUSTOM_WEB_DOMAIN=example.com         # Your main frontend domain
+CUSTOM_API_DOMAIN=api.example.com     # Your API backend subdomain
+```
+
+**TRUSTED_ORIGINS Configuration**
+This variable controls which origins Better Auth accepts requests from. It must be properly formatted as a comma-separated string that gets parsed into an array:
+
+```env
+# Development
+TRUSTED_ORIGINS=http://localhost:5173,http://localhost:8787
+
+# Production
+TRUSTED_ORIGINS=https://example.com,https://api.example.com
+```
+
+**Important**: The `TRUSTED_ORIGINS` environment variable must be a comma-separated string without spaces. The application parses this using `env.TRUSTED_ORIGINS?.split(",")` to create an array for Better Auth.
+
+### Cookie Configuration Differences
+
+The authentication system uses different cookie settings based on the environment:
+
+**Development Settings (`ALCHEMY_STAGE=dev`)**
+```typescript
+defaultCookieAttributes: {
+  sameSite: "none",    // Required for cross-domain cookies  
+}
+crossSubDomainCookies: {
+  enabled: false,      // Not needed for different domains
+}
+trustedOrigins: [
+  "http://localhost:5173",
+  "http://localhost:8787"
+]
+```
+
+**Production Settings (`ALCHEMY_STAGE=prod`)**
+```typescript  
+defaultCookieAttributes: {
+  sameSite: "lax",     // Safer for same domain, different subdomains
+}
+crossSubDomainCookies: {
+  enabled: true,       // Share cookies across *.example.com
+  domain: "example.com"  // Parent domain for subdomain sharing
+}
+trustedOrigins: [
+  "https://example.com",
+  "https://api.example.com"
+]
+```
+
+### Why These Settings Matter
+
+**Development Cross-Domain Issues**
+- Different ports/domains (`localhost:5173` ↔ `localhost:8787`) require `sameSite: "none"`  
+- Browsers block cross-domain cookies with `sameSite: "lax"` by default
+- Must use `credentials: "include"` on all client requests
+
+**Production Cross-Subdomain Benefits**
+- Same parent domain allows `sameSite: "lax"` for better security
+- Cookies automatically shared across `*.example.com` subdomains
+- More secure than `sameSite: "none"` while maintaining functionality
 
 ### Configuration
 
@@ -291,18 +371,34 @@ Create `.env.dev.example` → `.env.dev` with:
 ```env
 VITE_CLIENT_URL=http://localhost:5173
 VITE_SERVER_URL=http://localhost:8787
-TRUSTED_ORIGIN=http://localhost:5173
+TRUSTED_ORIGINS=http://localhost:5173
 BETTER_AUTH_URL=http://localhost:8787
 BETTER_AUTH_SECRET=your-secret-key
 GOOGLE_CLIENT_ID=your-google-oauth-id
-GOOGLE_CLIENT_SECRET=your-google-oauth-secret
+GOOGLE_CLIENT_SECRET=your-google-oauth-secret  
 GITHUB_CLIENT_ID=your-github-oauth-id
 GITHUB_CLIENT_SECRET=your-github-oauth-secret
 RESEND_API_KEY=your-resend-key
+CUSTOM_WEB_DOMAIN=localhost:5173
+CUSTOM_API_DOMAIN=localhost:8787
 ```
 
 **Production Environment**  
-Create `.env.prod.example` → `.env.prod` with production URLs and secrets.
+Create `.env.prod.example` → `.env.prod` with:
+```env
+VITE_CLIENT_URL=https://example.com
+VITE_SERVER_URL=https://api.example.com
+TRUSTED_ORIGINS=https://example.com,https://api.example.com
+BETTER_AUTH_URL=https://api.example.com
+BETTER_AUTH_SECRET=your-production-secret-key
+GOOGLE_CLIENT_ID=your-google-oauth-id
+GOOGLE_CLIENT_SECRET=your-google-oauth-secret
+GITHUB_CLIENT_ID=your-github-oauth-id  
+GITHUB_CLIENT_SECRET=your-github-oauth-secret
+RESEND_API_KEY=your-resend-key
+CUSTOM_WEB_DOMAIN=example.com
+CUSTOM_API_DOMAIN=api.example.com
+```
 
 ### Installation
 

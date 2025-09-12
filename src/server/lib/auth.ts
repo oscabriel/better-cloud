@@ -4,7 +4,11 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { emailOTP, openAPI } from "better-auth/plugins";
 import { Resend } from "resend";
 import { db } from "@/server/db";
-import { EMAIL_FROM_ADDRESS, EMAIL_FROM_NAME } from "@/server/lib/constants";
+import {
+	EMAIL_FROM_ADDRESS,
+	EMAIL_FROM_NAME,
+	WEB_DOMAIN,
+} from "@/server/lib/constants";
 import * as schema from "../db/schema/auth";
 import { verificationCodeEmail } from "./email-templates";
 
@@ -25,12 +29,6 @@ export const auth = betterAuth({
 		github: {
 			clientId: env.GITHUB_CLIENT_ID,
 			clientSecret: env.GITHUB_CLIENT_SECRET,
-		},
-	},
-	session: {
-		cookieCache: {
-			enabled: true,
-			maxAge: 5 * 60,
 		},
 	},
 	secondaryStorage: {
@@ -75,7 +73,7 @@ export const auth = betterAuth({
 	advanced: {
 		crossSubDomainCookies: {
 			enabled: env.ALCHEMY_STAGE !== "dev",
-			domain: env.ALCHEMY_STAGE === "dev" ? undefined : "better-cloud.dev",
+			domain: env.ALCHEMY_STAGE === "dev" ? undefined : WEB_DOMAIN,
 		},
 		defaultCookieAttributes: {
 			sameSite: env.ALCHEMY_STAGE === "dev" ? "none" : "lax",
