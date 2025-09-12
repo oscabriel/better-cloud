@@ -16,7 +16,7 @@ export const auth = betterAuth({
 	secret: env.BETTER_AUTH_SECRET,
 	baseURL: env.BETTER_AUTH_URL,
 	basePath: "/auth",
-	trustedOrigins: env.TRUSTED_ORIGINS?.split(",") || [],
+	trustedOrigins: env.TRUSTED_ORIGINS?.split(","),
 	socialProviders: {
 		google: {
 			clientId: env.GOOGLE_CLIENT_ID,
@@ -78,8 +78,8 @@ export const auth = betterAuth({
 			domain: env.ALCHEMY_STAGE === "dev" ? undefined : "better-cloud.dev",
 		},
 		defaultCookieAttributes: {
-			sameSite: "lax",
-			secure: env.ALCHEMY_STAGE !== "dev",
+			sameSite: env.ALCHEMY_STAGE === "dev" ? "none" : "lax",
+			secure: true,
 			httpOnly: true,
 		},
 	},

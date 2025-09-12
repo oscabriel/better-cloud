@@ -5,6 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"build": "vite build",
+		"clean": "rm -rf ./node_modules/.vite",
 		"preview": "bun run build && vite preview",
 		"typecheck": "tsc --noEmit",
 		"a:dev": "bun alchemy dev --env-file .env.dev",

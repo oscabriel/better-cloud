@@ -12,7 +12,6 @@ const stage = process.env.ALCHEMY_STAGE || "dev";
 
 const app = await alchemy("better-cloud", {
 	stage,
-	password: process.env.ALCHEMY_PASSWORD!,
 });
 
 const db = await D1Database("database", {
