@@ -47,41 +47,40 @@ export const CounterDisplay = memo(function CounterDisplay({
 
 			{/* Statistics */}
 			{showStats && (
-				<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+				<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 					<div className="space-y-2 rounded-lg bg-muted/50 p-4">
 						<div className="text-muted-foreground text-xs uppercase tracking-wide">
-							Total Increments
+							Total Changes
 						</div>
-						<div className="font-semibold text-green-600 text-xl">
-							+{formatNumber(state.totalIncrements)}
+						<div className="break-words text-center font-semibold text-2xl sm:text-xl md:text-2xl lg:text-3xl">
+							<span className="whitespace-nowrap text-green-600">
+								+{formatNumber(state.totalIncrements)}
+							</span>
+							<wbr />
+							<span className="mx-1 text-muted-foreground sm:mx-2">/</span>
+							<wbr />
+							<span className="whitespace-nowrap text-red-600">
+								-{formatNumber(state.totalDecrements)}
+							</span>
 						</div>
 					</div>
 
 					<div className="space-y-2 rounded-lg bg-muted/50 p-4">
-						<div className="text-muted-foreground text-xs uppercase tracking-wide">
-							Total Decrements
-						</div>
-						<div className="font-semibold text-red-600 text-xl">
-							-{formatNumber(state.totalDecrements)}
-						</div>
-					</div>
-
-					<div className="space-y-2 rounded-lg bg-muted/50 p-4 sm:col-span-2 lg:col-span-1">
 						<div className="text-muted-foreground text-xs uppercase tracking-wide">
 							Last Updated
 						</div>
 						<div className="space-y-1">
 							{state.lastUpdated ? (
 								<>
-									<div className="font-semibold text-sm">
+									<div className="font-semibold text-xl sm:text-lg">
 										{formatDate(state.lastUpdated)}
 									</div>
-									<div className="text-muted-foreground text-xs">
+									<div className="text-base text-muted-foreground sm:text-sm">
 										by {getLastUpdaterDisplay(state.lastUpdater)}
 									</div>
 								</>
 							) : (
-								<div className="font-semibold text-muted-foreground text-sm">
+								<div className="font-semibold text-muted-foreground text-xl sm:text-lg">
 									Never
 								</div>
 							)}

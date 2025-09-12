@@ -23,7 +23,7 @@ app.use("*", prettyJSON());
 app.use(
 	"/*",
 	cors({
-		origin: env.TRUSTED_ORIGIN,
+		origin: env.TRUSTED_ORIGINS?.split(",") || [],
 		allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
 		allowHeaders: [
 			"Content-Type",
@@ -53,6 +53,10 @@ app.use(
 		},
 	}),
 );
+
+app.get("/", (c) => {
+	return c.text("OK");
+});
 
 app.route("/counter", counterRouter);
 app.route("/connection-count", connectionCounterRouter);

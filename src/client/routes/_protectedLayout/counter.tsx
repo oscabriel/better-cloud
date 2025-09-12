@@ -165,9 +165,41 @@ function CounterPage() {
 					</CardTitle>
 				</CardHeader>
 				<CardContent className="space-y-4 text-muted-foreground text-sm">
-					<div className="grid gap-4 lg:grid-cols-2">
-						{/* Wide diagram for large screens */}
-						<div className="hidden text-xs lg:block">
+					{/* Wide diagram for medium screens and up */}
+					<div className="hidden text-center text-xs md:block xl:hidden">
+						<pre className="inline-block whitespace-pre text-left text-slate-700 leading-tight dark:text-slate-300">
+							{`                     SQLite-Backed Durable Object Data Flow
+
+┌───────────────┐ HTTP/WebSocket ┌─────────────────┐ Requests ┌────────────────┐
+│    Clients    │ ──────────────▶│  Cloudflare     │ ────────▶│   Durable      │
+│               │◀────────────── │    Worker       │◀──────── │    Object      │
+│ • React UI    │   JSON/Events  │                 │          │                │
+│ • WebSocket   │                │ • Route Handler │          │ • In-Memory    │
+│ • Real-time   │                │ • Validation    │          │ • WebSocket    │
+└───────────────┘                └─────────────────┘          │   Manager      │
+                                                              └────────────────┘
+                                                                      │
+                                                              ┌────────────────┐
+                                                              │  SQLite DB     │
+                                                              │ Transactional  │
+                                                              │  Persistent    │
+                                                              └────────────────┘
+
+                               Hibernation Lifecycle
+
+┌────────────────┐  idle 30s  ┌─────────────────┐   message  ┌─────────────────┐
+│     ACTIVE     │ ──────────▶│   HIBERNATING   │ ──────────▶│   WAKE & LOAD   │
+│                │            │                 │            │                 │
+│ • Memory cache │            │ • Evicted from  │            │ • Constructor   │
+│ • Fast access  │            │   memory        │            │ • SQLite load   │
+│ • WebSockets   │◀────────── │ • Zero cost     │            │ • State restore │
+└────────────────┘  continue  └─────────────────┘            └─────────────────┘`}
+						</pre>
+					</div>
+
+					<div className="grid gap-4 xl:grid-cols-2">
+						{/* Wide diagram for extra large screens */}
+						<div className="hidden text-xs xl:block">
 							<pre className="whitespace-pre text-slate-700 leading-tight dark:text-slate-300">
 								{`                     SQLite-Backed Durable Object Data Flow
 
@@ -198,8 +230,8 @@ function CounterPage() {
 							</pre>
 						</div>
 
-						{/* Compact diagram for small screens */}
-						<div className="p-3 text-sm lg:hidden">
+						{/* Compact diagram for small screens only */}
+						<div className="p-3 text-sm md:hidden">
 							<pre className="overflow-x-auto whitespace-pre text-slate-700 leading-tight dark:text-slate-300">
 								{`SQLite-Backed Durable Object
 
@@ -227,6 +259,7 @@ function CounterPage() {
 └───────────┘ wake    └────────────┘`}
 							</pre>
 						</div>
+
 						<div>
 							<h4 className="mb-2 text-foreground text-lg">Key Benefits</h4>
 							<div className="space-y-2">

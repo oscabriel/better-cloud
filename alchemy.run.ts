@@ -65,7 +65,7 @@ export const server = await Worker("server", {
 		COUNTER: counter,
 		CONNECTION_COUNTER: connectionCounter,
 		ALCHEMY_STAGE: stage,
-		TRUSTED_ORIGIN: process.env.TRUSTED_ORIGIN!,
+		TRUSTED_ORIGINS: process.env.TRUSTED_ORIGINS!,
 		BETTER_AUTH_SECRET: alchemy.secret(process.env.BETTER_AUTH_SECRET!),
 		BETTER_AUTH_URL: process.env.BETTER_AUTH_URL!,
 		GOOGLE_CLIENT_ID: alchemy.secret(process.env.GOOGLE_CLIENT_ID!),
@@ -91,6 +91,10 @@ if (stage === "prod") {
 		worker: server,
 		path: "wrangler.jsonc",
 	});
+
+	console.log("\nDeployed via Alchemy:");
+	console.log(`  Client -> https://${process.env.CUSTOM_WEB_DOMAIN}`);
+	console.log(`  Server -> https://${process.env.CUSTOM_API_DOMAIN}`);
 }
 
 await app.finalize();
