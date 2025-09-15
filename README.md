@@ -1,5 +1,7 @@
 # Better-Cloud
 
+*Hello! Thank you for checking out this project. If you like what you see and want to see more production-ready projects and blog posts about those projects, check out my personal site: [oscargabriel.dev](https://oscargabriel.dev).*
+
 Better-Cloud is a comprehensive full-stack application demonstrating modern web development on Cloudflare's edge platform. This production-ready web app showcases real-time features, user authentication, and persistent data management using Cloudflare Workers, Durable Objects, D1, and KV, making use of Alchemy for its infrastructure-as-code configuration.
 
 ## Live Demo Features
