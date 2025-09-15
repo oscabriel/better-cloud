@@ -1,12 +1,12 @@
 # Better-Cloud
 
-Better-Cloud is a comprehensive full-stack application demonstrating modern web development on Cloudflare's edge platform. This production-ready application showcases real-time features, user authentication, and persistent data management using Cloudflare Workers, Durable Objects, D1, and KV, making use of Alchemy for its infrastructure-as-code configuration.
+Better-Cloud is a comprehensive full-stack application demonstrating modern web development on Cloudflare's edge platform. This production-ready web app showcases real-time features, user authentication, and persistent data management using Cloudflare Workers, Durable Objects, D1, and KV, making use of Alchemy for its infrastructure-as-code configuration.
 
 ## Live Demo Features
 
 - **🔢 Global Counter**: Real-time synchronized counter with persistent state
-- **📝 Guestbook**: Traditional guestbook with user profiles and country detection  
-- **👤 User Authentication**: Email OTP and social login (Google, GitHub)
+- **📝 Guestbook**: Traditional guestbook with user profiles and country field 
+- **👤 User Authentication**: Email OTP and social OAauth login (Google, GitHub)
 - **🔄 Real-time Updates**: WebSocket connections with hibernation API
 - **📊 Connection Monitoring**: Live connection count tracking
 
@@ -36,9 +36,8 @@ Better-Cloud is a comprehensive full-stack application demonstrating modern web 
 ## Application Features
 
 ### 🏠 Landing Page
-- Real-time API health check with CF location detection
-- Modern ASCII art branding
-- Feature overview and navigation
+- ASCII banner header
+- Real-time API health check with tRPC
 
 ### 🔢 Counter Demo (`/counter`)
 - **Global State Management**: SQLite-backed persistent counter
@@ -50,18 +49,14 @@ Better-Cloud is a comprehensive full-stack application demonstrating modern web 
 ### 📝 Guestbook (`/guestbook`)
 - **User Messages**: Create and view community messages
 - **Profile Integration**: Automatic name population from user profiles
-- **Country Detection**: Cloudflare geo-location integration
-- **Real-time Updates**: Instant message display without page refresh
 
 ### 👤 User Management (`/profile`)
 - **Profile Settings**: Update display name and preferences
-- **Session Management**: Secure authentication state
-- **Social Integration**: Google and GitHub OAuth providers
+- **Session Management**: View and terminate sessions on other devices
 
 ### 🔐 Authentication (`/sign-in`)
 - **Email OTP**: Passwordless authentication via verification codes
 - **Social OAuth**: Google and GitHub provider integration
-- **Session Persistence**: Secure session management with KV storage
 
 ## Tech Stack
 
@@ -236,12 +231,8 @@ Durable Objects provide stateful, globally-consistent serverless computing with 
 **Email OTP (One-Time Password)**
 - Passwordless authentication via email verification codes
 - 6-digit OTP codes sent via Resend email service  
-- Configurable expiry times and rate limiting
-- Development mode logs codes to console (no email sent)
 
 **Social OAuth Providers**
-- **Google**: OAuth 2.0 with Google Account integration
-- **GitHub**: OAuth 2.0 with GitHub profile access
 - Automatic profile creation and linking
 - Secure token management with refresh capabilities
 

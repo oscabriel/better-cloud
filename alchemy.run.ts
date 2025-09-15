@@ -37,7 +37,7 @@ const connectionCounter = DurableObjectNamespace("connection-counter", {
 });
 
 export const client = await Vite("client", {
-	name: `${app.name}-client`,
+	name: `${app.name}-site`,
 	assets: "dist",
 	adopt: true,
 	bindings: {
@@ -54,7 +54,7 @@ export const client = await Vite("client", {
 });
 
 export const server = await Worker("server", {
-	name: `${app.name}`,
+	name: `${app.name}-api`,
 	entrypoint: "src/server/index.ts",
 	compatibility: "node",
 	adopt: true,
