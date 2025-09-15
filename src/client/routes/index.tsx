@@ -3,6 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Button } from "@/client/components/ui/button";
 import { Card, CardContent } from "@/client/components/ui/card";
 import { trpc } from "@/client/lib/trpc-client";
+import { Footer } from "@/client/components/footer";
 
 export const Route = createFileRoute("/")({
 	component: RouteComponent,
@@ -108,6 +109,7 @@ function RouteComponent() {
 						/>
 					</ul>
 				</section>
+				<Footer />
 			</div>
 		</div>
 	);

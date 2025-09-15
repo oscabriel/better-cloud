@@ -12,7 +12,7 @@ import {
 	DropdownMenuTrigger,
 } from "@/client/components/ui/dropdown-menu";
 import { authClient } from "@/client/lib/auth-client";
-import { GITHUB_URL } from "@/client/lib/constants";
+import { GITHUB_REPO_URL } from "@/client/lib/constants";
 
 export function Header() {
 	const { data: session } = authClient.useSession();
@@ -57,7 +57,7 @@ export function Header() {
 							<DropdownMenuSeparator />
 							<DropdownMenuItem asChild className="text-lg">
 								<a
-									href={GITHUB_URL}
+									href={GITHUB_REPO_URL}
 									target="_blank"
 									rel="noopener noreferrer"
 									className="flex w-full items-center gap-1"
@@ -79,7 +79,7 @@ export function Header() {
 					))}
 					<Button className="mr-1 text-lg" variant="ghost" asChild>
 						<a
-							href={GITHUB_URL}
+							href={GITHUB_REPO_URL}
 							target="_blank"
 							rel="noopener noreferrer"
 							className="flex items-center gap-1"
